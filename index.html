@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>FlappyRick</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+	
+	<!-- VK Games SDK -->
+    
+	<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+	
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/sudokuVK1.json", {onProgress: UnityProgress});
+    </script>
+	
+	
+</script>
+
+  </head>
+  <body>
+    <div class="webgl-content" style = "position: absolute; width: 100%; height: 100%; left: 0%; top: 0%; right: 0%; transform: translate(0%, 0%)">
+      <div id="unityContainer" style = "position: absolute; width: 100%; height: 100%;"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">FlappyRick</div>
+      </div>
+    </div>
+	
+	
+	 <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+	 
+	
+	
+	<script type="text/javascript">
+	
+	vkBridge.send('VKWebAppInit');
+
+
+
+      function auth(){
+        vkBridge.send('VKWebAppGetUserInfo').then(_info =>{
+          console.log(_info);
+          unityI.SendMessage('VKSDK', 'AuthenticateSuccess', JSON.stringify(_info));
+        });
+      }
+	  
+	
+	  
+
+      function getUserData(){
+        vkBridge.send("VKWebAppStorageGet",{"keys":["_save"]}).then(data =>{
+        console.log(data);
+        unityI.SendMessage('VKSDK', 'DataGetting', JSON.stringify(data));
+      });}
+
+      function setUserData(data){
+        console.log(data);
+        vkBridge.send('VKWebAppStorageSet',{"key": "_save" , "value": data}).then(_info =>{
+          console.log("Saved!")});
+      }
+
+      function showFullscrenAd(){
+        vkBridge.send('VKWebAppShowNativeAds',{ad_format:"interstitial"}).then(data => {
+          console.log(data);});
+      }
+	  
+	  function ShowCommonADV(){
+        vkBridge.send('VKWebAppShowNativeAds',{ad_format:"interstitial"}).then(data => {
+          console.log(data);});
+      }
+	  
+	  function ShowCommonAdvertisment(){
+        vkBridge.send('VKWebAppShowNativeAds',{ad_format:"interstitial"}).then(data => {
+          console.log(data);});
+      }
+
+      function showRewardedAd(){
+        vkBridge.send('VKWebAppShowNativeAds',{ad_format:"reward"}).then(data => {
+          console.log(data);
+          unityI.SendMessage('VKSDK', 'RewardGetting',JSON.stringify(data.result));})
+      }
+	  
+	  function ShowAd(){
+        vkBridge.send('VKWebAppShowNativeAds',{ad_format:"reward"}).then(data => {
+          console.log(data);
+          unityI.SendMessage('VKSDK', 'RewardGetting',JSON.stringify(data.result));})
+      }
+	  
+	  function RepostFriends(){
+        vkBridge.send("VKWebAppShowInviteBox", {})
+         .then(data => console.log(data.success))  
+        .catch(error => console.log(error));
+      }
+	  
+	  function Favorite(){
+        vkBridge.send("VKWebAppAddToFavorites", {})
+         .then(data => console.log(data.success))  
+        .catch(error => console.log(error));
+      }
+	  
+	  function Repost(arg){
+        vkBridge.send("VKWebAppShowWallPostBox", {
+  "message": "Я набрал " +arg+ " очков в игре Flappy Rick, а сколько сможешь ты?",
+  "attachments": "https://vk.com/app51505083"
+});
+      }
+	
+	</script>
+	
+  </body>
+</html>
+
+
+
+
+
